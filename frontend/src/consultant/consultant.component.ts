@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ConsultantService } from "./consultant.service";
 import { Consultant } from "./consultant";
-import { Observable, Subscription } from "rxjs";
+import { Observable, Subscription, Subject } from "rxjs";
 import { Router } from "@angular/router";
 import { ConsultantCreateComponent } from "./consultant-create/consultant-create.component";
 import {
@@ -96,7 +96,18 @@ export class ConsultantComponent implements OnInit {
     });
   }
 
-  applyFilter(filterValue: string) {
+  
+  private noResults$ = new Subject<boolean>();
+
+  public applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    this.noResults$.next(
+      this.dataSource.filteredData.length === 0
+    );
   }
+
+  // applyFilter(filterValue: string) {
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  // }
 }

@@ -80,6 +80,10 @@
         class="consultant-table-row"
       ></mat-row>
     </mat-table>
+    <mat-card *ngIf="noResults$ | async">
+        No results
+      </mat-card>
+    
   </div>
   <mat-paginator
     [pageSize]="10"
